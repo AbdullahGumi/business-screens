@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: "LatinkaRegular";
+  src: local("LatinkaRegular"),
+   url("./fonts/Latinka/Latinka-Regular.ttf") format("truetype");
+  font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "LatinkaBold";
+    src: local("LatinkaBold"),
+     url("./fonts/Latinka/Latinka-Bold.ttf") format("truetype");
+    font-weight: bold;
+    }
+
+    @font-face {
+      font-family: "LatinkaMedium";
+      src: local("LatinkaMedium"),
+       url("./fonts/Latinka/Latinka-Medium.ttf") format("truetype");
+      }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'LatinkaRegular';
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
