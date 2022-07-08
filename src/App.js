@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 
 import "./App.css";
 import HelpPage from "./pages/HelpPage";
+import Favorites from "./pages/Favorites";
+import Login from "./pages/Login";
 
 function App() {
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ function App() {
   return (
     <div>
       <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/help" element={<HelpPage />} />
       </Routes>
     </div>
