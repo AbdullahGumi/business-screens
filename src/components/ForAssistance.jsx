@@ -1,7 +1,7 @@
 import React from "react";
 import { phoneIcon } from "../assets";
 
-const ForAssistance = () => {
+const ForAssistance = ({ assistant }) => {
   return (
     <div className="flex flex-col px-10">
       <div className="flex flex-col">
@@ -16,8 +16,8 @@ const ForAssistance = () => {
           <img src={phoneIcon} alt="phone" />
         </div>
         <div className="flex flex-col ">
-          <span className="text-sm">fgjkjgjgkdfjkjfkf</span>
-          <span className="text-[13px]">232323232323</span>
+          <span className="text-sm">{assistant.title}</span>
+          <span className="text-[13px]">{assistant.phone}</span>
         </div>
       </div>
     </div>

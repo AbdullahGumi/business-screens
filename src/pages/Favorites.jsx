@@ -1,30 +1,18 @@
-import React from "react";
-import { fav1, fav2, fav3, fav4 } from "../assets";
+import React, { useEffect } from "react";
 import BusinessCard from "../components/BusinessCard";
+import {
+  businessSelector,
+  fetchBusiness,
+} from "../redux/business/businessSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Favorites = () => {
-  const favroites = [
-    {
-      image: fav1,
-      title: "London stock",
-      subTitle: "Career start, 17-06-2018",
-    },
-    {
-      image: fav2,
-      title: "London stock",
-      subTitle: "Career start, 17-06-2018",
-    },
-    {
-      image: fav3,
-      title: "London stock",
-      subTitle: "Career start, 17-06-2018",
-    },
-    {
-      image: fav4,
-      title: "London stock",
-      subTitle: "Career start, 17-06-2018",
-    },
-  ];
+  const dispatch = useDispatch();
+  const { business } = useSelector(businessSelector);
+
+  useEffect(() => {
+    dispatch(fetchBusiness());
+  }, [dispatch]);
 
   return (
     <div className="p-5 flex flex-col">
@@ -32,9 +20,8 @@ const Favorites = () => {
         Favorites
       </h3>
       <div className="flex flex-col gap-10">
-        {favroites.map((fav) => (
-          <BusinessCard fav={fav} />
-        ))}
+        {business.length > 0 &&
+          business.map((fav, i) => <BusinessCard key={i} fav={fav} />)}
       </div>
     </div>
   );

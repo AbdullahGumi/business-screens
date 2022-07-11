@@ -1,63 +1,27 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Slide from "@mui/material/Slide";
 
 import OtpInput from "react-otp-input";
-import toast from "react-hot-toast";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const STATUS = {
-  STARTED: "Started",
-  STOPPED: "Stopped",
-};
 
-const INITIAL_COUNT = 60;
-
-const Otp = ({ otpOpen, handleOtpClose }) => {
-  const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
-  const [status, setStatus] = useState(STATUS.STOPPED);
-  const [otp, setOtp] = useState("");
-  const [randomOtp, setRandomOtp] = useState("");
-  const generateOtp = () =>
-    setRandomOtp(Math.floor(1000 + Math.random() * 9000));
-
-  const secondsToDisplay = secondsRemaining % 60;
-  const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
-  const minutesToDisplay = minutesRemaining % 60;
-
-  const handleStart = () => {
-    setStatus(STATUS.STARTED);
-  };
-  const handleReset = () => {
-    setSecondsRemaining(INITIAL_COUNT);
-    generateOtp();
-  };
-  useInterval(
-    () => {
-      if (secondsRemaining > 0) {
-        setSecondsRemaining(secondsRemaining - 1);
-      } else {
-        setStatus(STATUS.STOPPED);
-      }
-    },
-    status === STATUS.STARTED ? 1000 : null
-  );
-
-  const verifyOtp = () => {
-    if (otp.includes(randomOtp)) {
-      toast.success("verified");
-      handleOtpClose();
-    } else {
-      toast.error("Wrong otp");
-    }
-  };
-  useEffect(() => {
-    generateOtp();
-    handleStart();
-  }, []);
+const Otp = ({
+  otpOpen,
+  handleOtpClose,
+  verifyOtp,
+  twoDigits,
+  handleReset,
+  otp,
+  setOtp,
+  minutesToDisplay,
+  secondsRemaining,
+  secondsToDisplay,
+  randomOtp,
+}) => {
   return (
     <Dialog
       open={otpOpen}
@@ -121,25 +85,3 @@ const Otp = ({ otpOpen, handleOtpClose }) => {
 };
 
 export default Otp;
-
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
-
-const twoDigits = (num) => String(num).padStart(2, "0");

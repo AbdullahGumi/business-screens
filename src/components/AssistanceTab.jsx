@@ -1,34 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AssistanceTabMainVideo from "./AssistanceTabMainVideo";
 
 //redux
 import { useSelector } from "react-redux";
-import { userSelector } from "../redux/user/userSlice";
+import { bankSelector, fetchBank } from "../redux/bank/bankSlice";
+import { useDispatch } from "react-redux";
+
 import ForAssistance from "./ForAssistance";
 import BankAccountDetail from "./BankAccountDetail";
 import JazzCash from "./JazzCash";
 
-const details = {
-  title: "ABCD EF GH O GLFJKKKFFKJF",
-  accNo: "0J2323233532125",
-  bankName: "Meezan Bank",
-  branchCode: "0257 DHA Phase 5",
-  iban: "5555555555555555",
-};
-
 const AssistanceTab = () => {
-  const { loading } = useSelector(userSelector);
+  const dispatch = useDispatch();
+  const { bank } = useSelector(bankSelector);
+
+  useEffect(() => {
+    dispatch(fetchBank());
+  }, [dispatch]);
 
   return (
     <div>
-      {!loading && (
+      {Object.keys(bank).length > 0 && (
         <div className="flex flex-col gap-4">
           <AssistanceTabMainVideo />
-          <ForAssistance />
+          <ForAssistance assistant={bank.regionalRep} />
           <hr className="mx-5 bg-[#707070]" />
-          <BankAccountDetail details={details} />
+          <BankAccountDetail details={bank.bankAccountDetails} />
           <hr className="mx-5 bg-[#707070]" />
-          <JazzCash />
+          <JazzCash details={bank.jazzCash} />
           <hr className="mx-5 bg-[#707070]" />
           <div>
             <span className="px-5 text-[15px]">How to use One Call App?</span>
